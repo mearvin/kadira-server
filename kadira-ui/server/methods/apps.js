@@ -1,4 +1,6 @@
 /*eslint-disable new-cap*/
+import { v4 as uuid } from 'uuid';
+
 Meteor.methods({
   "apps.create": function(appName, pricingType) {
     check(appName, String);
@@ -17,7 +19,7 @@ Meteor.methods({
       name: appName,
       created: new Date(),
       owner: this.userId,
-      secret: Meteor.uuid(),
+      secret: uuid(),
       plan: plan,
       shard: shard,
       subShard: subShard,
@@ -34,7 +36,7 @@ Meteor.methods({
   },
   "apps.regenerateSecret": function(appId) {
     check(appId, String);
-    var appSecret = Meteor.uuid();
+    var appSecret = uuid();
     Apps.update({_id: appId, owner: this.userId}, {$set: {secret: appSecret}});
   },
   "apps.delete": function(appId){

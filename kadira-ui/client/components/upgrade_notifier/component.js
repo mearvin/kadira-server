@@ -1,4 +1,6 @@
 /* eslint max-len: 0 */
+import { v4 as uuid } from 'uuid';
+
 var CONTENTS = {
   "share": {
     "title": "Application Sharing",
@@ -48,7 +50,7 @@ var CONTENTS = {
 };
 
 var component = FlowComponents.define("upgradeNotifier", function(props) {
-  this.modalId = props.id || Meteor.uuid();
+  this.modalId = props.id || uuid();
   this.set("modalId", this.modalId);
 
   this.onRendered(function() {

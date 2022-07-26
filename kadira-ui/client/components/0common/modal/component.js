@@ -1,5 +1,7 @@
+import { v4 as uuid } from 'uuid';
+
 var component = FlowComponents.define("modal", function(props) {
-  this.modalId = props.id || Meteor.uuid();
+  this.modalId = props.id || uuid();
 
   this.set("modalId", this.modalId);
   this.modalClass = props.modalClass || "";
