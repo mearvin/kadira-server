@@ -22,8 +22,9 @@ component.action.signInWithEmail = function(email, password) {
 component.prototype.signInWithMeteor = function() {
   var options = {};
   if(IsMobile.any) {
-    options.loginStyle = "redirect";
   }
+  options.loginStyle = "redirect";
+  // options.redirectUrl = "popup";
 
   Meteor.loginWithMeteorDeveloperAccount(options, this.showError.bind(this));
 };

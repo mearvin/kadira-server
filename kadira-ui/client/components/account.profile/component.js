@@ -5,9 +5,10 @@ var component = FlowComponents.define("account.profile", function() {
 
 component.action.reconnectMeteorDevAccount = function() {
   var options = {};
-  if(IsMobile.any) {
-    options.loginStyle = "redirect";
-  }
+  // if(IsMobile.any) {
+  //   options.loginStyle = "redirect";
+  // }
+  // options.redirectUrl = "http://localhost:3000/_oauth/meteor-developer?close"
 
   Meteor.loginWithMeteorDeveloperAccount(options, this.showError.bind(this));
 };
