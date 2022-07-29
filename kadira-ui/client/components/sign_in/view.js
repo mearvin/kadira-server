@@ -5,12 +5,10 @@ Template.signIn.events({
     var password = tmpl.$("input[name=password]").val();
     FlowComponents.callAction("signInWithEmail", email, password);
   },
-  "click #sign-in-with-meteor": function(e) {
+  "submit #sign-up-with-email": function(e, tmpl) {
     e.preventDefault();
-    FlowComponents.callAction("signInWithMeteor");
-  },
-  "click #sign-up-with-meteor": function(e) {
-    e.preventDefault();
-    FlowComponents.callAction("signUpWithMeteor");
+    const email = tmpl.$("input[name=email]").val();
+    const password = tmpl.$("input[name=password]").val();
+    FlowComponents.callAction("signUpWithEmail", email, password);
   }
 });

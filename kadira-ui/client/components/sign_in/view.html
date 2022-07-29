@@ -11,27 +11,23 @@
         {{#if state$error}}
         <div class="alert alert-danger">{{state$error}}</div>
         {{/if}}
-        <div>
-          {{#if state$isSignInPage}}
-            {{> loginButtons}}
-            <button class="btn" id="sign-in-with-meteor">
-              <img src="/images/sign-in-with-meteor.png">
-            </button>
-            <div class="email-option">
-              <strong class="line-thru or-sign-in">{{i18n "common.or"}}</strong>
-            </div>
-          {{/if}}
+        <div>          
           {{#if state$isSignUpPage}}
-            <button class="btn" id="sign-up-with-meteor">
-              <img src="/images/sign-up-with-meteor.png">
-            </button>
+            <form class="form" id="sign-up-with-email">
+              <div class="form-group">
+                <input autofocus="" name="email" type="email" class="form-control" placeholder="{{i18n 'signIn.email'}}">
+              </div>
+              <div class="form-group">
+                <input name="password" type="password" class="form-control" placeholder="{{i18n 'signIn.password'}}">
+              </div>
+              <button type="submit" class="submit btn btn-block btn-default">{{i18n "signIn.sign_up"}}</button>
+            </form>
             <p class="agreement"> {{{i18n "signIn.privacy_policy_links" "https://kadira.io/privacy_policy.html" "https://kadira.io/terms_and_conditions.html"}}}
             </p>
           {{/if}}
         </div>
-        {{#if state$isSignInPage}}
-          <div class="sign-in-toggle"><a data-toggle="collapse" href="#sign-in-with-email">{{i18n "signIn.sign_in_with_email"}}</a></div>
-          <form class="form collapse" id="sign-in-with-email">
+        {{#if state$isSignInPage}}          
+          <form class="form" id="sign-in-with-email">
             <div class="form-group">
               <input autofocus="" name="email" type="email" class="form-control" placeholder="{{i18n 'signIn.email'}}">
             </div>

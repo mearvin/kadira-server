@@ -1,5 +1,3 @@
-import IsMobile from 'ismobilejs'
-
 var component = FlowComponents.define("signIn", function(params) {
   var options = params.options || {};
   this.set("isSignUpPage", !!options.isSignUpPage);
@@ -19,22 +17,17 @@ component.action.signInWithEmail = function(email, password) {
   Meteor.loginWithPassword(email, password, this.showError.bind(this));
 };
 
-component.prototype.signInWithMeteor = function() {
-  var options = {};
-  if(IsMobile.any) {
+component.action.signUpWithEmail = function(email, password) {
+  const options = {};
+
+  if (!email || !password) {
+    return;
   }
-  options.loginStyle = "redirect";
-  // options.redirectUrl = "popup";
 
-  Meteor.loginWithMeteorDeveloperAccount(options, this.showError.bind(this));
-};
+  options.email = email.trim();
+  options.password = password;
 
-component.action.signInWithMeteor = function() {
-  this.signInWithMeteor();
-};
-
-component.action.signUpWithMeteor = function() {
-  this.signInWithMeteor();
+  Accounts.createUser(options, this.showError.bind(this));
 };
 
 component.prototype.resetView = function() {

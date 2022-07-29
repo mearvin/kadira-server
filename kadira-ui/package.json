@@ -31,7 +31,6 @@
     "uuid": "^8.3.2",
     "zeroclipboard": "^2.3.0"
   },
-  "devDependencies": {},
   "author": "",
   "license": "ISC"
 }
