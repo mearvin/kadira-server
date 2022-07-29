@@ -35,7 +35,7 @@ Package.onUse(function(api) {
 });
 
 function configurePackage(api) {
-  api.versionsFrom('METEOR@1.0');
+  api.versionsFrom(['1.0', '2.5']);
   api.use('mongo');
   api.use('accounts-base');
   api.use('underscore');
