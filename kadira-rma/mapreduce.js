@@ -1,4 +1,4 @@
-MapReduce = function (db, sourceColl, outCollection, map, reduce, options) {
+module.exports = async function (db, sourceColl, outCollection, map, reduce, options) {
   var finalize = options.finalize;
   var query = options.query;
   var mrContext = options.scope || {};
@@ -10,12 +10,14 @@ MapReduce = function (db, sourceColl, outCollection, map, reduce, options) {
   this['emit'] = function() {};
 
   var emittedData = {};
-  var count = db[sourceColl].find(query).count();
+  var count = await db.collection(sourceColl).find(query).count();
 
   var startAt = Date.now();
-  print("   need to fetch: " + count);
+  console.log("   need to fetch: " + count);
 
-  db[sourceColl].find(query).forEach(function(d) {
+  const input = await db.collection(sourceColl).find(query).toArray()
+
+  input.forEach(function(d) {
     var response = map.call(d);
     var k = JSON.stringify(response[0]);
     if(!emittedData[k]) {
@@ -44,30 +46,35 @@ MapReduce = function (db, sourceColl, outCollection, map, reduce, options) {
   });
 
   var diff = Date.now() - startAt;
-  print("   fetched in: " + diff + " ms");
+  console.log("   fetched in: " + diff + " ms");
 
-  var bulk = db[outCollection].initializeOrderedBulkOp();
+  var bulk = db.collection(outCollection).initializeOrderedBulkOp();
 
   for (var k in emittedData) {
     var key = JSON.parse(k);
     key.time = new Date(key.time);
     var reducedData = reduce(key, emittedData[k]);
     var finalValue = finalize(key, reducedData);
-    bulk.find({_id: key}).upsert().updateOne({$set: {value: finalValue}});
+    await bulk.find({_id: key}).upsert().updateOne({$set: {value: finalValue}});
   }
 
   startAt = Date.now();
-  bulk.execute();
+  if ((bulk?.s?.currentBatch?.operations || []).length) {
+    await bulk.execute();
+  }
 
   // inserting stats
-  var statBulk = db.prodStats.initializeUnorderedBulkOp();
+  var statBulk = await db.collection('prodStats').initializeUnorderedBulkOp();
   for (var statStr in statMap) {
     if (statMap.hasOwnProperty(statStr)) {
-      statBulk.insert(statMap[statStr]);
+      await statBulk.insert(statMap[statStr]);
     }
   }
-  statBulk.execute();
+
+  if ((statBulk?.s?.currentBatch?.operations || []).length) {
+    await statBulk.execute();
+  }
 
   diff = Date.now() - startAt;
-  print("   writing completed in: " + diff + " ms");
+  console.log("   writing completed in: " + diff + " ms");
 };

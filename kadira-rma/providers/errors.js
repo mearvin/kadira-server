@@ -1,4 +1,4 @@
-var PROVIDER = {
+const PROVIDER = {
   name: "errors",
   collection: "errorMetrics",
   rawCollection: "rawErrorMetrics",
@@ -75,3 +75,5 @@ var PROVIDER = {
     return finalValue;
   }
 }
+
+module.exports = PROVIDER;

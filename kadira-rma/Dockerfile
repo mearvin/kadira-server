@@ -8,12 +8,12 @@
 #   apk add --no-cache ca-certificates nodejs mongodb
 #
 
-FROM alpine:edge
+FROM alpine:3.16
 
 RUN \
- echo 'http://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
+ echo 'http://dl-3.alpinelinux.org/alpine/v3.16/community' >> /etc/apk/repositories && \
  apk upgrade --update && \
- apk add --no-cache ca-certificates nodejs mongodb
+ apk add --no-cache ca-certificates nodejs nodejs-npm mongodb
 
 WORKDIR /app
 
@@ -22,6 +22,6 @@ RUN npm install
 ADD . /app
 
 ENV MONGO_SHARD one
-ENV MONGO_URL mongodb://dbserver/apm
+# ENV MONGO_URL mongodb://dbserver/apm
 
 CMD [ "npm", "run", "start" ]

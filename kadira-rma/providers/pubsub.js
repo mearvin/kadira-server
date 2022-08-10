@@ -1,4 +1,4 @@
-var PROVIDER = {
+const PROVIDER = {
   name: "pubsub",
   collection: "pubMetrics",
   rawCollection: "rawPubMetrics",
@@ -110,3 +110,5 @@ var PROVIDER = {
     return finalValue;
   }
 };
+
+module.exports = PROVIDER;
