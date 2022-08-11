@@ -2,22 +2,36 @@ var connect = require ('connect');
 var http = require ('http');
 var mongodb = require('mongodb');
 var MongoCluster = require('mongo-sharded-cluster');
+const bodyParser = require('body-parser');
+const qs = require('qs');
 
 var app = connect ();
 
-app.use(connect.query());
-app.use(connect.json({limit: '5mb'}));
+app.use((req, res, next) => {
+  console.log(req._parsedUrl.query);
+  req.query = qs.parse(req._parsedUrl.query);
+  next();
+});
 
-if(process.env.FORWARD_URL) {
-  console.log('>>> ', process.env.FORWARD_URL);
-  var forwarder = require('./lib/middlewares/forward');
-  app.use(forwarder(process.env.FORWARD_URL));
-}
+app.use(bodyParser.json({limit: '5mb'}));
+
+/*
+ ** Not sure what this forwarder is for and it was using a deprecated npm package "request"
+  // if(process.env.FORWARD_URL) {
+  //   console.log('>>> ', process.env.FORWARD_URL);
+  //   var forwarder = require('./lib/middlewares/forward');
+  //   app.use(forwarder(process.env.FORWARD_URL));
+  // }
+ */
 
 // add connect-ntp middleware, for the legacy support
 // this does not works everywhere because, this doesn't
 // works well with firewalls since this uses TCP over HTTP
-app.use(require('connect-ntp')());
+
+/**
+ * Old package, not sure if needed.
+  // app.use(require('connect-ntp')());
+ */
 
 // new ntp middleware, simple sends the timestamp to the client
 // this works well with firewalls, this is plain old HTTP
@@ -47,7 +61,7 @@ function afterMongoURLConnected(err, db) {
   if (err) {
     throw err;
   } else {
-    DBS.app = db;
+    DBS.app = db.db('apm');
 
     // parse JSON data sent using XDR with has data type set to text/plain
     // do this before appinfo otherwise required data will not be available

@@ -1,16 +1,15 @@
-FROM alpine:3.2
+FROM node:16.16.0-alpine3.16@sha256:d39ab4712a8395d0b399dea44d9cb8b34ac942411b6a380449ebdb9d321136a3
 
-RUN \
- apk upgrade --update && \
- apk add --no-cache ca-certificates nodejs
+ENV NODE_ENV production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-ADD ./package.json /app/
-RUN npm install
-ADD . /app
+COPY package*.json ./
 
-ENV PORT 80
-ENV MONGO_URL mongodb://dbserver/apm
+RUN npm ci --only=production
 
-CMD [ "npm", "run", "start" ]
+# Bundle app source
+COPY . .
+
+EXPOSE 80
+CMD [ "node", "server.js" ]
