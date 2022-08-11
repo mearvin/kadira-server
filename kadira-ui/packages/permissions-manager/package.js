@@ -5,6 +5,7 @@ Package.describe({
 
 
 Package.onUse(function(api) {
+  api.use('local:collections');
   api.addFiles("lib/permissions_manager.js", ["client", "server"]);
   api.addFiles("lib/roles.js", ["client", "server"]);
   api.versionsFrom('METEOR@1.0');

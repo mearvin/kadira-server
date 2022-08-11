@@ -26,6 +26,7 @@ function configurePackage(api) {
   api.use('mongo-livedata');
   api.use('audit-argument-checks');
   api.use('meteorhacks:subs-manager');
+  api.use('local:collections');
   api.addFiles('lib/client/job.js', 'client');
   api.addFiles(['lib/collections.js', 'lib/jobs.js'], ['client','server']);
   api.addFiles(['lib/server/methods.js', 'lib/server/publications.js'], 'server');

@@ -62,3 +62,4 @@ dynamic-import@0.7.2
 underscore@1.0.10
 edemaine:accounts-ui-bootstrap-3
 accounts-password@2.2.0
+local:collections

@@ -59,6 +59,7 @@ keiths:octicons@1.2.2
 launch-screen@1.3.0
 less@2.8.0
 livedata@1.0.18
+local:collections@0.0.0
 local:debug-store@0.0.0
 local:jobs@0.0.0
 local:kadira-data@0.0.0

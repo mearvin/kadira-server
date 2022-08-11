@@ -46,6 +46,7 @@ function configurePackage(api) {
   api.use('ejson');
   api.use('meteorhacks:unblock@1.1.0');
   api.use('cosmos:browserify@0.7.0');
+  api.use('local:collections');
   api.use('local:plans-manager');
   api.use('local:permissions-manager');
   api.use('anti:i18n');
