@@ -3,6 +3,7 @@ const { program } = require('commander');
 const profiles = require('./profiles');
 const providers = require('./providers');
 const incrementalAggregation = require('./incremental-aggregation.js');
+const batchAggregation = require('./batch-aggregation.js');
 
 program
   .option('--mongo-url <uri>', 'The URI used to connect to a Mongo database.')
@@ -19,9 +20,10 @@ program
       const PROFILE = profiles[args.profile];
       const PROVIDER = providers[args.provider];
 
-      console.log(args)
       if (args.type === "incremental") {
         await incrementalAggregation(db, PROFILE, PROVIDER);
+      } else if (args.type === "batch") {
+        await batchAggregation(db, PROFILE, PROVIDER);
       }
     } catch (err) {
       exitCode = 1;

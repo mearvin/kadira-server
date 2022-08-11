@@ -89,7 +89,7 @@ module.exports = async function(appDb, PROFILE, PROVIDER) {
   console.log(JSON.stringify(query));
   
   console.log("  Using local MR");
-  MapReduce(appDb, sourceCollection, destCollection, PROVIDER.map, PROVIDER.reduce, options);
+  await MapReduce(appDb, sourceCollection, destCollection, PROVIDER.map, PROVIDER.reduce, options);
   
   Log.elapsedTime = Date.now() - Log.startedAt.getTime();
   
