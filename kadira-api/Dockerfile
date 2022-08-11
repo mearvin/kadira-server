@@ -1,21 +1,23 @@
-FROM alpine:3.2
+FROM node:16.16.0-alpine3.16@sha256:d39ab4712a8395d0b399dea44d9cb8b34ac942411b6a380449ebdb9d321136a3
 
-RUN \
- apk upgrade --update && \
- apk add --no-cache ca-certificates python g++ make nodejs
+ENV NODE_ENV production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-ADD ./package.json /app/
-RUN npm install
-ADD . /app
+COPY package*.json ./
+
+RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
 
 ENV PORT 80
-ENV MONGO_APP_URL mongodb://dbserver/apm
-ENV MONGO_SHARD_URL_one mongodb://dbserver/apm
+ENV MONGO_APP_URL mongodb://kadira-db:27017/apm
+ENV MONGO_SHARD_URL_one mongodb://kadira-db:27017/apm
 ENV MAIL_URL smtp://user:pass@smtp.mailgun.org:587
 ENV AUTH_SECRET secret
 ENV JWT_SECRET secret
 ENV JWT_LIFETIME 1d
 
-CMD [ "npm", "run", "start" ]
+EXPOSE 80
+CMD [ "node", "server.js" ]

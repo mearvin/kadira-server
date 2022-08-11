@@ -17,7 +17,9 @@ const logger = console;
       PORT, AUTH_SECRET, MAIL_URL, JWT_SECRET, JWT_LIFETIME
     } = process.env;
 
-    const appDb = await Promise.promisify(MongoClient.connect)(process.env.MONGO_APP_URL);
+    const client = new MongoClient(process.env.MONGO_APP_URL);
+    await client.connect();
+    const appDb = client.db('apm');
     const mongoCluster = await Promise.promisify(MongoCluster.initFromEnv)();
 
     const schemas = loadSchemas({

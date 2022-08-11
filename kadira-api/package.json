@@ -22,12 +22,12 @@
     "test": "npm run lint && npm run testonly"
   },
   "devDependencies": {
-    "babel-eslint": "4.x.x",
+    "babel-eslint": "^10.1.0",
     "chai": "3.x.x",
-    "eslint": "1.7.x",
-    "eslint-plugin-babel": "2.x.x",
-    "mocha": "2.x.x",
-    "nodemon": "1.7.x",
+    "eslint": "^8.21.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
     "sinon": "1.x.x"
   },
   "dependencies": {
@@ -40,24 +40,34 @@
     "body-parser": "1.x.x",
     "cookie-parser": "1.x.x",
     "cors": "^2.7.1",
-    "express": "4.x.x",
+    "express": "^4.18.1",
     "express-graphql": "^0.4.9",
     "fast-stats": "0.0.3",
     "graphql": "^0.4.14",
     "graphql-errors": "2.x.x",
-    "graphql-utils": "1.x.x",
+    "graphql-utils": "^1.0.0",
     "histo-utils": "0.2.x",
     "immutable": "3.7.x",
     "invariant": "^2.1.1",
     "jsonwebtoken": "5.7.x",
-    "lodash": "3.x.x",
+    "lodash": "^4.17.21",
     "lru-cache": "2.x.x",
     "moment": "2.x.x",
     "mongo-sharded-cluster": "2.x.x",
-    "mongodb": "2.x.x",
+    "mongodb": "4.8.1",
     "node-uuid": "^1.4.7",
-    "url-mailer": "0.x.x",
-    "ws": "0.8.x"
+    "underscore": "1.13.4",
+    "url-mailer": "0.0.3",
+    "html-to-text": "~8.2.1",
+    "nodemailer": "^6.7.7",
+    "ws": "^8.8.1"
+  },
+  "overrides": {    
+    "mongodb": "$mongodb",
+    "underscore": "$underscore",
+    "lodash" : "$lodash",
+    "html-to-text": "$html-to-text",
+    "nodemailer": "$nodemailer"
   },
   "private": true
 }
