@@ -18,7 +18,8 @@
     "run:system-3hour": "PROFILE=3hour PROVIDER=system sh start.sh"
   },
   "dependencies": {
-    "npm-run-all": "^3.1.2",
-    "pick-mongo-primary": "^0.4.1"
+    "commander": "9.4.0",
+    "mongodb": "4.8.1",
+    "npm-run-all": "4.1.5"
   }
 }

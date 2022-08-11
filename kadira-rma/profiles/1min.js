@@ -1,4 +1,4 @@
-var PROFILE = {
+const PROFILE = {
   name: '1min',
   //we normally aggregate (lastTime - <xxx> time) data due to the fact some data might come late
   //but when quering for changes in the UI, we need to take twice the time of this
@@ -11,3 +11,5 @@ var PROFILE = {
   //used to filter resolutions for the input
   resolution: null
 };
+
+module.exports = PROFILE;

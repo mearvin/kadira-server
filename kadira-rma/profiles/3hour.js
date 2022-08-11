@@ -1,4 +1,4 @@
-var PROFILE = {
+const PROFILE = {
   name: '3hour',
   //we normally aggregate (lastTime - <xxx> time) data due to the fact some data might come late
   reverseMillis: 1000 * 60 * 60 * 3.5,
@@ -9,3 +9,5 @@ var PROFILE = {
   //collection where we need to read data from
   resolution: '30min'
 };
+
+module.exports = PROFILE;

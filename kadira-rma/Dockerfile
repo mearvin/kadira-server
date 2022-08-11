@@ -1,27 +1,14 @@
-# TODO use a stable version of alpine linux when
-#      the mongodb package becomes available
-#
-# FROM alpine:3.2
-#
-# RUN \
-#   apk upgrade --update && \
-#   apk add --no-cache ca-certificates nodejs mongodb
-#
+FROM node:16.16.0-alpine3.16@sha256:d39ab4712a8395d0b399dea44d9cb8b34ac942411b6a380449ebdb9d321136a3
 
-FROM alpine:edge
+ENV NODE_ENV production
 
-RUN \
- echo 'http://dl-3.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
- apk upgrade --update && \
- apk add --no-cache ca-certificates nodejs mongodb
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-ADD ./package.json /app/
-RUN npm install
-ADD . /app
+RUN npm ci --only=production
 
-ENV MONGO_SHARD one
-ENV MONGO_URL mongodb://dbserver/apm
+# Bundle app source
+COPY . .
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "start" ]
